@@ -15,24 +15,14 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/test', function () {
-  $myArr["cols"] = [
-                      array("id" => "A", 'label' => "Province","type" => "string")
-                    ];
-  $myArr["rows"] = [
-                      array(
-                            "c" => [
-                                      array("v" => 'ID-AC',"f" => 'Aceh')
-                                    ]
-                            ),
-                      array(
-                            "c" => [
-                                      array("v" => "ID-BA","f" => "Bali")
-                                    ]
-                            )
+Route::get('/test/{id}', function ($id) {
+  $reachPA = array("jk" => 130037704, "ma" => 98049216, "pb" => 54283278, "ss" => 2354171);
+
+  $myArr["ID-PA"] = [
+                      array("id" => "ID-PA", 'label' => "Province","name" => "Daerah Khusus Papua", "reach" => $reachPA, "mention" => [], "engagement" => [])
                     ];
 
-  $myJSON = json_encode($myArr);
+  $myJSON = json_encode($myArr[$id][0]);
 
   return $myJSON;
 });
