@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('geochart-1');
+});
+
+Route::get('/2', function () {
+    return view('geochart-2');
 });
 
 Route::get('/test/{id}', function ($id) {
@@ -25,4 +29,10 @@ Route::get('/test/{id}', function ($id) {
   $myJSON = json_encode($myArr[$id][0]);
 
   return $myJSON;
+});
+
+Route::get('/test/geo/2', function () {
+  $test = file_get_contents('vendor/leaflet/crimes_by_district.geojson');
+
+  return $test;
 });
