@@ -54,36 +54,13 @@
           [{v:'ID-YO', f:'Daerah Istimewa Yogyakarta'}, 3675768],
         ]);
 
-        var view = new google.visualization.DataView(data);
-        view.setColumns([0, 1]);
-
-        for (var i = 0; i < data.getNumberOfRows(); i++) {
-          var countryValue = data.getValue(i, 1);
-          data.setValue(i, 1, i);
-          data.setFormattedValue(i, 1, countryValue);
-        }
-
         var options = {
           region: 'ID',
           resolution:'provinces',
           colorAxis: {colors: [
-                                '#0000FF',
-                                '#000080',
-                                '#00FFFF',
-                                '#964B00',
-                                '#FFD700',
-                                '#00FF00',
-                                '#FFFF00',
-                                '#FF0000',
-                                '#800000',
-                                '#FFC0CB',
-                                '#6F00FF',
-                                '#FF7F00',
-                                '#BF00FF',
-                                '#8F00FF',
-                                '#808000',
-                                '#BDB76B',
-                                '#00FF00',
+                                'green',
+                                'orange',
+                                'red',
                               ]
                       }
         };
@@ -221,9 +198,21 @@
         background: white;
         border: 1px solid #0000001c;
       }
+
+      .content ul{
+        background: #c5c5c5;
+      }
+
+      .nav-tabs .nav-link {
+            border: 1px solid transparent;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+            color: white;
+            padding-right: 20px;
+        }
     </style>
   </head>
-  <body>
+  <body style="background: #c5c5c529;">
     <div class="">
       <div class="mapsgeo" style="display:flex">
         <div class="maps-geochart" id="maps-geochart" style="width: 70%; height: 100%;">
@@ -302,6 +291,66 @@
               <div class="engagement">
                 <div class="label-en" style="text-align:center">
                   <h4>ENGAGEMENT BY MEDIA</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="top-content">
+        <div class="container">
+          <div class="card">
+            <div class="card body">
+              <div class="label" style="text-align:center">
+                <h1>Top Issues</h1>
+              </div>
+              <div class="content">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home" aria-selected="true">All</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="jk-tab" data-toggle="tab" href="#jk" role="tab" aria-controls="profile" aria-selected="false">Jokowi</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="ma-tab" data-toggle="tab" href="#ma" role="tab" aria-controls="contact" aria-selected="false">Ma'ruf Amin</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pb-tab" data-toggle="tab" href="#pb" role="tab" aria-controls="contact" aria-selected="false">Prabowo</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="ss-tab" data-toggle="tab" href="#ss" role="tab" aria-controls="contact" aria-selected="false">Sandiaga S Undo</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent" style="margin-bottom:20px">
+                  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="issuses" style="padding:40px">
+                      <div class="issuses-content">
+                        <div class="label-issuses">
+                          <h3>Konterversi Jokowi disebut sebagai antek PKI</h3>
+                        </div>
+                        <div class="descrip">
+                          Netezin menilai partai pengusung jokowi dibantu oleh PKI, namun ada pula yang menyayangkan bahwaisu PKI terhadap jokowi adalah
+                          black campaign untuk menjatuhkan jokowi. Isu ini juga dimuat di 6 artikel dengan rincian NusantaraNews (2), CNNIndonesia (1), Detik(1)
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="issuses-content">
+                        <div class="label-issuses">
+                          <h3>Konterversi Jokowi disebut sebagai antek PKI</h3>
+                        </div>
+                        <div class="descrip">
+                          Netezin menilai partai pengusung jokowi dibantu oleh PKI, namun ada pula yang menyayangkan bahwaisu PKI terhadap jokowi adalah
+                          black campaign untuk menjatuhkan jokowi. Isu ini juga dimuat di 6 artikel dengan rincian NusantaraNews (2), CNNIndonesia (1), Detik(1)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="jk" role="tabpanel" aria-labelledby="profile-tab">Jk</div>
+                  <div class="tab-pane fade" id="ma" role="tabpanel" aria-labelledby="contact-tab">Ma</div>
+                  <div class="tab-pane fade" id="pb" role="tabpanel" aria-labelledby="contact-tab">Pb</div>
+                  <div class="tab-pane fade" id="ss" role="tabpanel" aria-labelledby="contact-tab">Ss</div>
                 </div>
               </div>
             </div>
