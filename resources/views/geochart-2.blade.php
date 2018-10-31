@@ -58,7 +58,7 @@
 	};
 
 	info.update = function (props) {
-		this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+		this._div.innerHTML = '<h4>Indonesia Population Density</h4>' +  (props ?
 			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
 			: 'Hover over a state');
 	};
@@ -125,19 +125,27 @@
 		});
 	}
 
+  $.each(statesData.features, function(index) {
+    $.extend( this , {id:index} );
+    $.extend( this.properties , {name:this.properties.Propinsi} );
+    $.extend( this.properties , {density:index} );
+    delete this.properties.ID;
+    delete this.properties.SUMBER;
+    delete this.properties.Propinsi;
+    delete this.properties.kode;
+  });
+
 	geojson = L.geoJson(statesData, {
 		style: style,
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
-	var t5 = statesData.features.slice(0,5);
-	// console.log(t5);
+	// var t5 = statesData.features.slice(0,5);
+	// // console.log(t5);
 	// $.each(t5, function(index) {
-	// 	this.push(
-	// 		"id": "7"
-	// 	);
+  //   ;
 	// });
-	console.log(t5);
+	console.log(statesData);
 
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
