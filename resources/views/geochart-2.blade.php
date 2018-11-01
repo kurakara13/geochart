@@ -10,6 +10,7 @@
 	<!-- <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" /> -->
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+		<link href="{{asset('vendor/slider/nouislider.min.css')}}" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
 
@@ -24,8 +25,13 @@
 			height: 400px;
 		}
 	</style>
+	<div id="slider" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+	<div style="margin-right: auto; margin-left: auto; width: 90%; margin-bottom: 10px; text-align: center;">
+		<input type="number" min='1' max='35675999' id="input-number-min">
+		<input type="number" min='2' max='35676000' id="input-number-max">
+	</div>
 
-	<style>#map { width: 85%; height: 500px; }
+	<style>#map { width: 100%; height: 100%; }
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
 .legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
 </head>
@@ -33,10 +39,11 @@
 
 <div id='map'></div>
 
+<script src="{{asset('vendor/slider/nouislider.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendor/leaflet/test-states.js')}}"></script>
 
 <script type="text/javascript">
-
+	//leaflet
 	var map = L.map('map').setView([-2.001075, 117.680777], 4.5);
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -173,6 +180,58 @@
 	};
 
 	legend.addTo(map);
+	
+
+	//noUiSlider
+
+		var slidervar = document.getElementById('slider');
+		noUiSlider.create(slider, {
+			start: [1,35676000],
+			connect: true,
+			range: {
+				min: [1],
+				max: [35676000]
+			}
+		});
+
+		document.getElementById('input-number-min').setAttribute("value", 1);
+		document.getElementById('input-number-max').setAttribute("value", 35676000);
+
+		var inputNumberMin = document.getElementById('input-number-min');
+		var inputNumberMax = document.getElementById('input-number-max');
+		inputNumberMin.addEventListener('change', function(){
+		    slidervar.noUiSlider.set([this.value, null]);
+		});
+		inputNumberMax.addEventListener('change', function(){
+		    slidervar.noUiSlider.set([null, this.value]);
+		});
+
+		slidervar.noUiSlider.on('update', function( values, handle ) {
+	    //handle = 0 if min-slider is moved and handle = 1 if max slider is moved
+	    if (handle==0){
+		        document.getElementById('input-number-min').value = values[0];
+		    } else {
+		        document.getElementById('input-number-max').value =  values[1];
+		    }
+		//we will definitely do more here...wait
+		});
+
+		rangeMin = document.getElementById('input-number-min').value;
+		rangeMax = document.getElementById('input-number-max').value;
+
+		//first let's clear the layer:
+		cluster_popplaces.clearLayers();
+		//and repopulate it
+		popplaces = new L.geoJson(exp_popplaces,{
+		    onEachFeature: pop_popplaces,
+		        filter:
+		            function(feature, layer) {
+		                 return (feature.properties.pop_max <= rangeMax) && (feature.properties.pop_max >= rangeMin);
+		            },
+		    pointToLayer: popplaces_marker
+		})
+		//and back again into the cluster group
+		cluster_popplaces.addLayer(popplaces);
 
 </script>
 

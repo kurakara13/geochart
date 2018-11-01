@@ -19,6 +19,14 @@ Route::get('/2', function () {
     return view('geochart-2');
 });
 
+Route::get('/3', function () {
+    return view('geochart-3');
+});
+
+Route::get('/4', function () {
+    return view('geochart-test');
+});
+
 Route::get('/test/{id}', function ($id) {
   $reachPA = array("jk" => 130037704, "ma" => 98049216, "pb" => 54283278, "ss" => 2354171);
 
